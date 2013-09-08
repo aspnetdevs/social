@@ -37,7 +37,7 @@
     padding-left: 10px;
 }
 
-.RegTextBox {
+.BackgroundTextBox {
     background: #d1cfcf;
     width: 400px;
     height: 40px;
@@ -48,10 +48,10 @@
     border-right: 1px solid #111;
     border-bottom: 1px solid #111;
 }
-    /*.RegTextBox:focus {
+    /*.BackgroundTextBox:focus {
                 box-shadow:0px 0px 15px #fff;
             }*/
-    .RegTextBox input {
+    .BackgroundTextBox input {
         background-color: #d1cfcf;
         outline: none;
         border: 0px;
@@ -104,7 +104,7 @@
     background: linear-gradient(top, #0ea8d9, #0d6a93);
 }
 
-.LogButton input:hover {
+.EnterButton input:hover {
         box-shadow: 0 0 2px #55c8f5;
         cursor: pointer;
 }

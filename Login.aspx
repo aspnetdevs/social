@@ -22,7 +22,7 @@
                             <asp:Localize ID="Localize2" runat="server" Mode="PassThrough" Text="<%$ Resources: labels, Email %>" /></li>
                         <li></li>
                     </ul>
-                    <div class="RegTextBox">
+                    <div class="BackgroundTextBox">
                         <asp:TextBox ID="TBfirst_name" runat="server" MaxLength="30"></asp:TextBox>
                     </div>
                     <ul>
@@ -30,7 +30,7 @@
                             <asp:Localize ID="Localize1" runat="server" Mode="PassThrough" Text="<%$ Resources: labels, Password %>" /></li>
                         <li></li>
                     </ul>
-                    <div class="RegTextBox">
+                    <div class="BackgroundTextBox">
                         <asp:TextBox ID="TBlast_name" runat="server" MaxLength="30"></asp:TextBox>
                     </div>
                     <div class="EnterButton">
