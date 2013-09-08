@@ -1,0 +1,37 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Main.master.cs" Inherits="Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="style/jquery-ui.min.css" rel="stylesheet" />
+    <link href="style/bootstrap.min.css" rel="stylesheet" />
+    <link href="style/Register.css" rel="stylesheet" />
+    <link href="style/Main.css" rel="stylesheet" />
+    <script src="script/jquery-2.0.0.min.js"></script>
+    <script src="script/jquery-ui.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="navigation">
+            <div id="search">
+                <div class="input-append">
+                    <input class="input-larger" size="16" type="text" />
+                    <button class="btn" type="button">Поиск</button>
+                </div>
+            </div>
+            <div id="buttons">
+                <asp:Button ID="mainNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Главная" />
+                <asp:Button ID="friendsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Друзья" />
+                <asp:Button ID="messagesNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Сообщения" />
+                <asp:Button ID="newsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Новости" />
+                <asp:Button ID="settingsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Настройки" />
+                <asp:Button  ID="logoutNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Выход" />
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>
