@@ -27,11 +27,16 @@
                 <asp:Button ID="messagesNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Сообщения" />
                 <asp:Button ID="newsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Новости" />
                 <asp:Button ID="settingsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Настройки" />
-                <asp:Button  ID="logoutNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Выход" />
+                <asp:Button ID="logoutNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Выход" />
             </div>
         </div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-        </asp:ContentPlaceHolder>
+        <div id="Content">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+            <div class="block" id="LiveWindow">
+               
+            </div>
+        </div>
     </form>
 </body>
 </html>
