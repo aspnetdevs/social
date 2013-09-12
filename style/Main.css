@@ -1,15 +1,23 @@
-﻿#navigation {
+﻿body {
+    margin: 0;
+    background-color: #202021;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#navigation {
     position: fixed;
     top: 0;
     /*may be it will be modified*/
     min-width: 1300px;
     width: 100%;
     background-color: #fff;
+    border-bottom: 1px solid #e1dede;
+    z-index:1000;
 }
 
     #navigation #buttons {
         float: right;
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
     #navigation #search {
@@ -28,20 +36,28 @@
 }
 
 .block {
+    color: white;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    border-radius:5px;
-    border:2px solid #cecece;
+    background-color: rgba(147, 144, 144, 0.3);
+    border-radius: 5px;
+    border: 2px solid #cecece;
+}
+
+.top-block {
+    margin-top: 20px;
+}
+
+.bottom-block {
+    margin-top: 10px;
 }
 
 .left-block {
     float: left;
-    margin-top: 30px;
-    margin-left:3%;
-    width: 40%;
+    margin-left: 1%;
+    width: 42%;
 }
+
 .right-block {
-    margin-top: 30px;
     float: right;
     width: 55%;
 }
@@ -51,7 +67,6 @@
     width: 100%;
     /*may be it will be modified*/
     min-width: 1300px;
-    border-top: 1px solid #e1dede;
 }
 
 #MainBlock {
@@ -62,8 +77,9 @@
 #LiveWindow {
     float: right;
     width: 25%;
-    height:500px;
-    margin-right: 10px;
+    height: 500px;
+    margin-right: 20px;
+    margin-top: 20px;
     padding: 20px;
 }
 
@@ -78,22 +94,65 @@
 
 #Info {
     height: 300px;
+    position: relative;
 }
 
 #Friends {
     clear: left;
-    height: 200px;
+    max-height:226px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    
+    
 }
 
 #QuickMessage {
-    padding:2px;
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    padding: 3px;
 }
+
 .messageTextBox {
-    /*Why 97.5*/
-    width:97.5%;
-    resize:none;
+    width: 97%;
+    resize: none;
 }
+
 .btn-send {
-    float:right;
-    margin-right:10px;
+    float: right;
+    margin-right: 10px;
+}
+
+#FullName {
+    display: inline-block;
+    font-size: 2em;
+    padding: 5px 0 0 15px;
+}
+
+#Status {
+    float: right;
+    display: inline-block;
+    font-size: 1.5em;
+    padding: 5px 5px 0 0;
+}
+
+.FriendAvatar {
+    border: 1px solid white;
+    height: 64px;
+    width: 64px;
+    margin-top:5px;
+    display: inline-block;
+}
+
+.FriendName {
+    width: 100%;
+    font-size: smaller;
+}
+
+#FriendsList {
+    text-align: center;
+    width: 100%;
+}
+#FriendsList td {
+    width: 25%;
 }
