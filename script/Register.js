@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-
     var doc = $(document);
     var B_next = $(".B_next");
     var B_previously = $(".B_previously");

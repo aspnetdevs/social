@@ -5,21 +5,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="script/jquery-2.0.0.min.js"></script>
     <link href="Styles/Register.css" rel="stylesheet" />
-    <script src="js/Register.js"></script>
+    <script src="script/Register.js"></script>
+    <script src="script/ValidationReg.js"></script>
+    <script src="script/jquery.selectbox.js"></script>
+    <link href="style/selectbox.css" rel="stylesheet" />
+    	<script>
+    	    (function ($) {
+    	        $(function () {
+    	            $('select').selectbox();
+    	        })
+    	    })(jQuery)
+	</script>
     <script>
-
-        function validation_name(control, args) {
-            args.IsValid = false;
-            if (/\s/.test(args.Value) || !args.Value) {
-                 $("#Validator_first_name").css("opacity", "0")
-                     .html('<img src="img/imgRegister/Error.png" />')
-                 .animate({ "opacity": "1" }, 500);
-            }
-            else { args.IsValid = true; }
-            
-        }
+       
 
     </script>
 </head>
@@ -35,8 +35,8 @@
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
-                        <asp:TextBox ID="TBfirst_name" runat="server" MaxLength="30"></asp:TextBox>
-                        <asp:CustomValidator ID="Validator_first_name" runat="server" ErrorMessage="*" ClientValidationFunction="validation_name" ControlToValidate="TBfirst_name" ClientIDMode="Static">*</asp:CustomValidator>
+                        <asp:TextBox placeholder="Введите имя" CssClass="ValidarionReg" ID="TBfirst_name" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:Image CssClass="Mandetry" ImageUrl="img/imgRegister/Empty.png" ID="TBfirst_nameImg" runat="server" />
                     </div>
 
                     <ul>
@@ -44,24 +44,28 @@
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
-                        <asp:TextBox ID="TBlast_name" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox placeholder="Введите фамилию" CssClass="ValidarionReg" ID="TBlast_name" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:Image ImageUrl="img/imgRegister/Empty.png" ID="TBlast_nameImg" runat="server" />
                     </div>
 
                     <ul>
-                        <li>Дата рождения</li>
+                        <li>Пароль</li>
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
-                        <asp:TextBox ID="TBbirthday" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox placeholder="Больше 5 символов" CssClass="ValidarionReg" ID="TBPassword" runat="server" MaxLength="30" TextMode="Password"></asp:TextBox>
+                        <asp:Image ImageUrl="img/imgRegister/Empty.png" ID="TBPasswordImg" runat="server" />
                     </div>
 
                     <ul>
-                        <li>Мобильный телефон</li>
+                        <li>Подтверждение пароля</li>
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
-                        <asp:TextBox ID="mobile" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox placeholder="Подтвердите пароль" CssClass="ValidarionReg" ID="TBConfirmPassword" runat="server" MaxLength="30" TextMode="Password"></asp:TextBox>
+                        <asp:Image ImageUrl="img/imgRegister/Empty.png" ID="TBConfirmPasswordImg" runat="server" />
                     </div>
+
 
                     <p class="B_next">Next</p>
                     <asp:Button ID="Button1" runat="server" Text="Button" />
@@ -72,27 +76,32 @@
                 <div class="EnterDate">
 
                     <ul>
-                        <li>2222</li>
-                        <li></li>
-                    </ul>
-                    <div class="RegisterTextBox">
-                        <asp:TextBox ID="TextBox9" runat="server" MaxLength="30"></asp:TextBox>
-                    </div>
-
-                    <ul>
-                        <li>Фамилия</li>
-                        <li></li>
-                    </ul>
-                    <div class="RegisterTextBox">
-                        <asp:TextBox ID="TextBox10" runat="server" MaxLength="30"></asp:TextBox>
-                    </div>
-
-                    <ul>
                         <li>Дата рождения</li>
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
-                        <asp:TextBox ID="TextBox11" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox CssClass="ValidarionReg" ID="TBbirthday" runat="server" MaxLength="30">2012-12-12</asp:TextBox>
+                        <asp:Image ImageUrl="img/imgRegister/Empty.png" ID="TBbirthdayImg" runat="server" />
+                    </div>
+
+                    <ul>
+                        <li>Мобильный телефон</li>
+                        <li></li>
+                    </ul>
+                    <div class="RegisterTextBox">
+                        <asp:TextBox placeholder="+38(044)555-55-55" CssClass="ValidarionReg" ID="TBmobile" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:Image ImageUrl="img/imgRegister/Empty.png" ID="TBmobileImg" runat="server" />
+                    </div>
+                    <div class="section maxheight">
+                        <asp:DropDownList ID="DropDownListTBmobile" runat="server" ClientIDMode="Static">
+                        </asp:DropDownList>
+                    </div>
+                    <ul>
+                        <li>Skype</li>
+                        <li></li>
+                    </ul>
+                    <div class="RegisterTextBox">
+                        <asp:TextBox ID="TBSkype" runat="server" MaxLength="30"></asp:TextBox>
                     </div>
 
                     <ul>
@@ -109,9 +118,8 @@
             </div>
             <div class="RegisterCenterBlock">
                 <div class="EnterDate">
-
                     <ul>
-                        <li>3333</li>
+                        <li>sdgdfhgdfgsdf</li>
                         <li></li>
                     </ul>
                     <div class="RegisterTextBox">
@@ -145,7 +153,7 @@
                     <p class="B_previously">Previously</p>
                 </div>
             </div>
-            </div>
+        </div>
     </form>
 </body>
 </html>
