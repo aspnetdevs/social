@@ -21,6 +21,7 @@ namespace Social
         public string Status { get; set; }
         public List<Person> Friends { get; set; }
         public string AvatarUrl { get; set; }
+        public string MiniAvatarUrl { get; set; }
 
         SqlConnection conn;
         string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
@@ -59,6 +60,7 @@ namespace Social
                 Email = dr["email"].ToString();
                 Status = dr["status"].ToString();
                 AvatarUrl = dr["avatar"].ToString();
+                MiniAvatarUrl = dr["mini_avatar"].ToString();
             }
         }
         //May be it's better to query only needed columns

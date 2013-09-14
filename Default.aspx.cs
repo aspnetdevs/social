@@ -15,5 +15,6 @@ public partial class _Default : System.Web.UI.Page
         person = new Person(id).FindFriends();
         FriendsList.DataSource = person.Friends;
         FriendsList.DataBind();
+        Image1.ImageUrl = !string.IsNullOrEmpty(person.AvatarUrl) ? person.AvatarUrl : "images/no_photo.jpg";
     }
 }
