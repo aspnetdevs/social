@@ -11,7 +11,7 @@ public partial class _Default : System.Web.UI.Page
     public Person person = null;
     protected void Page_Load(object sender, EventArgs e)
     {
-        string id = Request.QueryString["id"] ?? "";
+      string id = Request.QueryString["id"] ?? "";
         person = new Person(id).FindFriends();
         FriendsList.DataSource = person.Friends;
         FriendsList.DataBind();

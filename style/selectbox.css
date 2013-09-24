@@ -3,30 +3,39 @@
 	cursor: pointer;
 }
 .selectbox .select {
-	width: 185px;
+	width: 300px;
 	height: 30px;
 	padding: 0 45px 0 10px;
 	font: 14px/30px Arial, Tahoma, sans-serif;
-	color: rgb(0, 0, 0);
+	color: #333;
 	text-shadow: 1px 1px #FFF;
-	background: #f5f5f5 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+v//PxM2zMDAQEtxgAADAF2uTe9L4getAAAAAElFTkSuQmCC) repeat-x;
-	border: 1px solid #ccc;
-	border-bottom-color: #b3b3b3;
+	background: #d1cfcf ;
 	border-radius: 4px;
-	box-shadow: inset 1px -1px #F1F1F1, inset -1px 0 #F1F1F1, 0 1px 2px rgba(0,0,0,0.1);
+	/*box-shadow: inset 1px -1px #F1F1F1, inset -1px 0 #F1F1F1, 0 1px 2px rgba(0,0,0,0.1);*/
+}
+.inputselect {
+    z-index: 4;
+    position: absolute;
+ 
 }
 .selectbox .select:hover {
-	background-color: #E6E6E6;
+	/*background-color: #E6E6E6;*/
 	background-position: 0 -10px;
 }
 .selectbox .select:active {
-	background: #f5f5f5;
+	/*background: #f5f5f5;*/
 	box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
 }
 .selectbox.focused .select {
 	border: 1px solid #5794BF;
 }
-
+.selectbox .select .text {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
 .selectbox .trigger {
 	position: absolute;
 	top: 0;
@@ -57,28 +66,26 @@
 	width: 240px;
 	margin: 0;
 	padding: 4px 0;
-    color:#000;
-	background: #ccc;
+	background: #d1cfcf;
 	border: 1px solid #C6CBD0;
 	border-radius: 4px;
-	box-shadow: 0 2px 10px rgba(0,0,0,1);
-	/*font: 14px/18px Arial, Tahoma, sans-serif;*/
+	box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+	font: 14px/18px Arial, Tahoma, sans-serif;
 }
 .selectbox li {
 	padding: 5px 10px 6px;
-	color: #000;
-
+	color: #231F20;
 }
 .selectbox li.selected {
 	background: #A3ABB1;
-	color: rgb(0, 0, 0);
+	color: #FFF;
 }
 .selectbox li:hover {
 	background: #08C;
-	color: #000;
+	color: #FFF;
 }
 .selectbox li.disabled {
-	color: rgb(0, 0, 0);
+	color: #AAA;
 }
 .selectbox li.disabled:hover {
 	background: none;

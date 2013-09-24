@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="Styles/Login.css" rel="stylesheet" />
+    <link href="style/Login.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -23,7 +23,7 @@
                         <li></li>
                     </ul>
                     <div class="BackgroundTextBox">
-                        <asp:TextBox ID="TBfirst_name" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox ID="TBemail" runat="server" MaxLength="30"></asp:TextBox>
                     </div>
                     <ul>
                         <li>
@@ -31,7 +31,7 @@
                         <li></li>
                     </ul>
                     <div class="BackgroundTextBox">
-                        <asp:TextBox ID="TBlast_name" runat="server" MaxLength="30"></asp:TextBox>
+                        <asp:TextBox ID="TBpasswrd" runat="server" MaxLength="30"></asp:TextBox>
                     </div>
                     <div class="EnterButton">
                         <asp:Button ID="TBenter" runat="server" Text="<%$ Resources: labels, Login %>" BorderStyle="None" />
