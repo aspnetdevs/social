@@ -34,8 +34,8 @@ public partial class Login : System.Web.UI.Page
             if (id != 0)
             {
                 //============!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Replace cookie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                HttpCookie cookie = new HttpCookie("id", id.ToString());
-                cookie.Expires = DateTime.Now.AddMinutes(1);
+                HttpCookie cookie = new HttpCookie("user", id.ToString());
+                cookie.Expires = DateTime.Now.AddDays(7);
                 Response.Cookies.Add(cookie);
                 Response.Redirect("http://localhost/social/Default.aspx?id="+id);
             }

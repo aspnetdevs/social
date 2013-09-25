@@ -25,7 +25,7 @@ public class AjaxFileHandler : IHttpHandler
             context.Response.Write(serializer.Serialize(result));
             string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
             SqlConnection conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("UPDATE persons SET avatar = @avatar WHERE id = 1",conn);
+            SqlCommand cmd = new SqlCommand("UPDATE persons SET avatar = @avatar WHERE id = "+context.Request.Cookies["user"].Value,conn);
             cmd.Parameters.AddWithValue("@avatar", catalog + file.FileName);
             conn.Open();
             cmd.ExecuteNonQuery();

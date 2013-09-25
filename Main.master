@@ -22,6 +22,23 @@
     <script src="script/uploader/jquery.fileupload-image.js"></script>
     <script>
         $(function () {
+            var talkingFriendId = 0;
+            function ReplaceSpacesToOne(str) {
+                var reg = /(\s){2,}/;
+                return str.replace(reg, " ");
+            }
+            $("#TalkToTxt").keyup(function () {
+                //To remove 2 following each to other spaces and trim the val
+                //Allow only All symbols + backspace
+                $("#FriendsToTalkBlock").load("Messages.aspx #WrapperFriendsList", { partName: ReplaceSpacesToOne($(this).val().trim()) });
+            });
+
+            $("#FriendsToTalkBlock").delegate(".FriendAvatar", "click", function () {
+                $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
+                talkingFriendId = $(this).siblings().attr("data-id");
+            });
+
+
             $("#dialog").dialog({
                 autoOpen: false,
                 modal: true,
@@ -50,7 +67,7 @@
                     $("#files").html("");
                     $("#photoInputBtn").show();
                     $("#uploadPhoto").hide();
-                    
+
                 }
             }).on('fileuploadadd', function (e, data) {
                 data.context = $('<div/>').appendTo('#files');
@@ -87,18 +104,72 @@
                     <button class="btn" type="button">Поиск</button>
                 </div>
             </div>
+            <!--!!!!!!!!!!!!!May be it would be better if it remove on links and don't make Response.Redirect but set href attribute-->
             <div id="buttons">
-                <asp:Button ID="mainNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Главная" />
-                <asp:Button ID="friendsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Друзья" />
-                <asp:Button ID="messagesNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Сообщения" />
+                <asp:Button ID="mainNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Главная" OnClick="mainNavItem_Click" />
+                <asp:Button ID="messagesNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Сообщения" OnClick="messagesNavItem_Click" />
                 <asp:Button ID="newsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Новости" />
                 <asp:Button ID="settingsNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Настройки" />
-                <asp:Button ID="logoutNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Выход" />
+                <asp:Button ID="logoutNavItem" runat="server" CssClass="btn btn-large btn-special" Text="Выход" OnClick="logoutNavItem_Click" />
             </div>
         </div>
         <div id="Content">
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
-            </asp:ContentPlaceHolder>
+            <div id="MainBlock">
+                <div id="InnerBlock">
+                    <div class="block left-block top-block" runat="server" clientidmode="Static" id="Avatar">
+                        <div id="AvatarContainer">
+                            <div style="height: 100%">
+                                <asp:Image ID="Image1" runat="server"></asp:Image>
+                                <div id="UnderAvatarPanel">
+                                    <% if ((bool)this.Page.Items["isMyPage"])
+                                       {%>
+                                    <button id="selectPhoto" class="btn btn-mini btn-avatar-panel">Выбрать фото</button>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dialog" title="Выбор фото">
+                            <div>
+                                <span id="photoInputBtn" class="btn btn-large fileinput-button">
+                                    <span>Выбор фото</span>
+                                    <input id="fileupload" type="file" name="files[]" />
+                                </span>
+                                <button id="uploadPhoto" class="btn btn-large" style="display: none">Загрузить</button>
+                                <br />
+                                <br />
+                                <div id="files" class="files"></div>
+                                <br />
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Примечание:</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li>Максимальный размер изображения - <strong>5 МБ</strong></li>
+                                            <li>Поддерживаются только (<strong>JPG, GIF, PNG</strong>) изображения</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <div class="block left-block bottom-block" id="Friends">
+                        <asp:DataList ID="FriendsList" ClientIDMode="Static" RepeatDirection="Horizontal" RepeatColumns="4" runat="server">
+                            <ItemTemplate>
+                                <div class="FriendAvatar">
+                                    <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("MiniAvatarUrl") %>' />
+                                </div>
+                                <div class="FriendName">
+                                    <%# Eval("FirstName")%><br />
+                                    <%#Eval("LastName") %>
+                                </div>
+                            </ItemTemplate>
+                        </asp:DataList>
+                    </div>
+                </div>
+            </div>
             <div class="block top-block" id="LiveWindow">
             </div>
         </div>
