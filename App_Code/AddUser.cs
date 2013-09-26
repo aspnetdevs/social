@@ -58,6 +58,28 @@ public class AddUser
         if (cityId == 0) city_name = city;
         DateTime dt = DateTime.Now;
         string confirmation_by_email = GetHashString(first_name + last_name + password);
+        
+             SqlConnection conn;
+             string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+             conn = new SqlConnection(connString);
+             SqlCommand cmd = new SqlCommand("INSERT INTO persons (first_name,last_name,password,IsMale,birthday,mobile,email,country_id,city_id,city_name,isAutorized,register_date,status,confirmation_by_email) VALUES (@first_name,@last_name,@password,@IsMale,@birthday,@mobile,@email,@country_id,@city_id,@city_name,@isAutorized,@register_date,@status,@confirmation_by_email)", conn);
+             conn.Open();
+             cmd.Parameters.Add(new SqlParameter("@first_name", first_name));
+             cmd.Parameters.Add(new SqlParameter("@last_name", last_name));
+             cmd.Parameters.Add(new SqlParameter("@password", password));
+             cmd.Parameters.Add(new SqlParameter("@IsMale", true));
+             cmd.Parameters.Add(new SqlParameter("@birthday", Convert.ToDateTime(birthday)));
+             cmd.Parameters.Add(new SqlParameter("@mobile",mobile));
+             cmd.Parameters.Add(new SqlParameter("@email", email));
+             cmd.Parameters.Add(new SqlParameter("@country_id", CountriId));
+             cmd.Parameters.Add(new SqlParameter("@city_id", cityId));
+             cmd.Parameters.Add(new SqlParameter("@city_name", city_name));
+             cmd.Parameters.Add(new SqlParameter("@isAutorized", false));
+             cmd.Parameters.Add(new SqlParameter("@register_date", dt));
+             cmd.Parameters.Add(new SqlParameter("@status", "Offline"));
+             cmd.Parameters.Add(new SqlParameter("@confirmation_by_email", confirmation_by_email));
+             cmd.ExecuteNonQuery();
+             conn.Close();
 
         SqlConnection conn;
         string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;

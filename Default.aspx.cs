@@ -22,6 +22,14 @@ public partial class _Default : System.Web.UI.Page
         }
         string id = Request.QueryString["id"] ?? "";
         person = new Person(id);
+        if (Request.Params["col"] != null)
+        {
+            person = new Person("1").FindFriends();
+            FriendsList.RepeatColumns = Convert.ToInt32(Request.Params["col"]);
+            FriendsList.RepeatDirection = RepeatDirection.Vertical;
+            FriendsList.DataSource = person.Friends;
+            FriendsList.DataBind();
+        }
     }
 }
 
