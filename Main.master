@@ -28,7 +28,7 @@
                 return str.replace(reg, " ");
             }
             $("#TalkToTxt").keyup(function () {
-                //To remove 2 following each to other spaces and trim the val
+
                 //Allow only All symbols + backspace
                 $("#FriendsToTalkBlock").load("Messages.aspx #WrapperFriendsList", { partName: ReplaceSpacesToOne($(this).val().trim()) });
             });
@@ -36,7 +36,22 @@
             $("#FriendsToTalkBlock").delegate(".FriendAvatar", "click", function () {
                 $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
                 talkingFriendId = $(this).siblings().attr("data-id");
+                //$("#FriendsToTalkBlock").load("Messages.aspx #WrapperFriendsList");
+                $("#MessagesText").load("Messages.aspx #WrapperMessagesListView", { receiverId: talkingFriendId });
             });
+
+            $("#sendMessage").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "AjaxMessagesHandler.ashx",
+                    data: { receiverId:talkingFriendId, messageText: $("#messageTxt").val() },
+                    success: function () {
+                        $("<div class='Message'><div class='MessageSender'><%=person.Fields["first_name"]%></div><div class='MessageText'>"+$("#messageTxt").val()+"</div></div>").appendTo("#WrapperMessagesListView");
+                    }
+                });
+            });
+
+
 
 
             $("#dialog").dialog({
@@ -159,11 +174,11 @@
                         <asp:DataList ID="FriendsList" ClientIDMode="Static" RepeatDirection="Horizontal" RepeatColumns="4" runat="server">
                             <ItemTemplate>
                                 <div class="FriendAvatar">
-                                    <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("MiniAvatarUrl") %>' />
+                                    <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("mini_avatar") %>' />
                                 </div>
                                 <div class="FriendName">
-                                    <%# Eval("FirstName")%><br />
-                                    <%#Eval("LastName") %>
+                                    <%# Eval("first_name")%><br />
+                                    <%#Eval("last_name") %>
                                 </div>
                             </ItemTemplate>
                         </asp:DataList>

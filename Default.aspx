@@ -2,21 +2,21 @@
 <%@ MasterType VirtualPath="~/Main.master" %>
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
     <div class="block right-block top-block" id="Info">
-        <span class="block-title"><%=person.FirstName %> <%=person.LastName %></span><span id="Status"><%=person.Status %></span>
+        <span class="block-title"><%=person.Fields["first_name"] %> <%=person.Fields["last_name"] %></span><span id="Status"><%=person.Fields["status"] %></span>
         <hr style="margin: 5px 0 0;" />
         <dl class="dl-horizontal">
             <dt>Дата рождения:</dt>
-            <dd><%=person.Birthday.ToString("d MMMM yyyy") %></dd>
+            <dd><%=Convert.ToDateTime(person.Fields["birthday"]).ToString("d MMMM yyyy") %></dd>
             <dt>Мобильный телефон:</dt>
-            <dd><%=person.Mobile %></dd>
+            <dd><%=person.Fields["mobile"] %></dd>
             <dt>E-mail:</dt>
-            <dd><%=person.Email %></dd>
+            <dd><%=person.Fields["email"] %></dd>
         </dl>
         <div id="MessageTyping">
-            <div id="MessageText">
+            <div>
                 <asp:TextBox placeholder="Введите сообщение" ID="messageTxt" Rows="5" CssClass="messageTextBox" runat="server" TextMode="MultiLine"></asp:TextBox>
             </div>
-            <div id="ControlPanel">
+            <div>
                 <asp:Button ID="sendMessage" runat="server" CssClass="btn btn-middle btn-send" Text="Отправить" />
             </div>
         </div>

@@ -9,19 +9,19 @@
         <div style="height: 93%;">
             <div id="FriendsToTalkBlock">
                 <div id="WrapperFriendsList">
-                <asp:DataList ID="FriendsList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
-                    <ItemTemplate>
-                        <div data-id='<%#Eval("ID") %>' style="display:none;"></div>
-                        <div class="FriendAvatar">
-                            <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("MiniAvatarUrl") %>' />
-                        </div>
-                        <div class="FriendName">
-                            <%# Eval("FirstName")%><br />
-                            <%#Eval("LastName") %>
-                        </div>
-                    </ItemTemplate>
-                </asp:DataList>
-                    </div>
+                    <asp:DataList ID="FriendsList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
+                        <ItemTemplate>
+                            <div data-id='<%#Eval("id") %>' style="display: none;"></div>
+                            <div class="FriendAvatar">
+                                <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("mini_avatar") %>' />
+                            </div>
+                            <div class="FriendName">
+                                <%# Eval("first_name")%><br />
+                                <%#Eval("last_name") %>
+                            </div>
+                        </ItemTemplate>
+                    </asp:DataList>
+                </div>
             </div>
             <div id="MessagesBlock">
                 <div id="MessagesList">
@@ -31,13 +31,25 @@
                         <asp:TextBox runat="server" ClientIDMode="Static" ID="TalkToTxt" />
                         </div>
                     </div>
+                    <div id="MessagesText">
+                        <div id="WrapperMessagesListView">
+                            <asp:ListView runat="server" ID="MessagesListView" ClientIDMode="Static">
+                                <ItemTemplate>
+                                    <div class="Message">
+                                        <div class="MessageSender"><%#Eval("sender_first_name") %></div>
+                                        <div class="MessageText"><%# Eval("message") %></div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:ListView>
+                        </div>
+                    </div>
                 </div>
                 <div id="MessageTyping">
-                    <div id="MessageText">
-                        <asp:TextBox placeholder="Введите сообщение" ID="messageTxt" Rows="5" CssClass="messageTextBox" runat="server" TextMode="MultiLine"></asp:TextBox>
+                    <div>
+                        <asp:TextBox placeholder="Введите сообщение" ID="messageTxt" ClientIDMode="Static" Rows="5" CssClass="messageTextBox" runat="server" TextMode="MultiLine"></asp:TextBox>
                     </div>
-                    <div id="ControlPanel">
-                        <asp:Button ID="sendMessage" runat="server" CssClass="btn btn-middle btn-send" Text="Отправить" />
+                    <div>
+                        <asp:Button ID="sendMessage" runat="server" OnClientClick="return false" ClientIDMode="Static" CssClass="btn btn-middle btn-send" Text="Отправить" />
                     </div>
                 </div>
             </div>

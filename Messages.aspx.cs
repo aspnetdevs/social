@@ -10,12 +10,20 @@ public partial class Messages : System.Web.UI.Page
     public Person person;
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (Request.Cookies["user"] != null)
         {
-            person = new Person(Request.Cookies["user"].Value).FindFriends(Request.Params["partName"] == null ? "" : Request.Params["partName"]);
-            FriendsList.DataSource = person.Friends;
-            FriendsList.DataBind();
+            if (Request.Params["receiverId"] != null)
+            {
+                MessagesListView.DataSource = Helper.FindMessages(Request.Cookies["user"].Value, Request.Params["receiverId"]);
+                MessagesListView.DataBind();
+            }
+            else
+            {
+                person = new Person(Request.Cookies["user"].Value).FindFriends(Request.Params["partName"] == null ? "" : Request.Params["partName"]);
+                FriendsList.DataSource = person.Friends;
+                FriendsList.DataBind();
+
+            }
             Items["isMyPage"] = true;
         }
         else

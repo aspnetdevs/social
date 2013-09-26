@@ -16,7 +16,7 @@ public partial class Main : System.Web.UI.MasterPage
         person = new Person(id).FindFriends("");
         FriendsList.DataSource = person.Friends;
         FriendsList.DataBind();
-        Image1.ImageUrl = !string.IsNullOrEmpty(person.AvatarUrl) ? person.AvatarUrl : "images/no_photo.jpg";
+        Image1.ImageUrl = person.Fields["avatar"].ToString();
     }
     protected void mainNavItem_Click(object sender, EventArgs e)
     {
