@@ -1,6 +1,61 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.master" AutoEventWireup="true" CodeFile="Messages.aspx.cs" Inherits="Messages" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
+    <input runat="server" type="hidden" clientidmode="Static" id="talkingFriendId" />
+    <style>
+        #UpdateProgress1 {
+            clear: both;
+            color: red;
+            text-align:center;
+        }
+    </style>
+    <script>
+        $(function () {
+            var talkingFriendId = 0;
+            function ReplaceSpacesToOne(str) {
+                var reg = /(\s){2,}/;
+                return str.replace(reg, " ");
+            }
+
+            $("#TalkToTxt").keyup(function () {
+                //Allow only All symbols + backspace
+                <%=ClientScript.GetPostBackEventReference(FriendListUPanel,"")%>
+            });
+
+            $("#FriendsToTalkBlock").delegate(".FriendAvatar", "click", function () {
+                //Some little manipulation. Need to pass data with _dopostback function
+                $("#TalkToTxt").val("");
+
+                //Why doesn't it work???
+                <%=ClientScript.GetPostBackEventReference(FriendListUPanel,"")%>
+                $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
+                talkingFriendId = $(this).siblings().attr("data-id");
+
+                //Some little manipulation. Need to pass data with _dopostback function
+                $("#talkingFriendId").val(talkingFriendId);
+
+                <%=ClientScript.GetPostBackEventReference(MessagesUPanel,"")%>
+            });
+
+            $("#sendMessage").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "AjaxMessagesHandler.ashx",
+                    data: { receiverId: talkingFriendId, messageText: $("#messageTxt").val() },
+                    success: function () {
+                        if (talkingFriendId > 0) {
+                            $("<div class='Message'><div class='MessageSender'><%=person.Fields["first_name"]%></div><div class='MessageText'>" + $("#messageTxt").val() + "</div></div>").appendTo("#<%=MessagesUPanel.ClientID%>");
+                            $("#messageTxt").val("");
+                        }
+                    },
+                    error: function () {
+                        alert("Error in ajax to AjaxMessagesHandler");
+                    }
+                });
+            });
+        });
+    </script>
+    <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
     <div class="block right-block top-block" id="Messages">
         <div style="height: 7%;">
             <span class="block-title">Сообщения</span>
@@ -8,20 +63,22 @@
         </div>
         <div style="height: 93%;">
             <div id="FriendsToTalkBlock">
-                <div id="WrapperFriendsList">
-                    <asp:DataList ID="FriendsToTalkList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
-                        <ItemTemplate>
-                            <div data-id='<%#Eval("id") %>' style="display: none;"></div>
-                            <div class="FriendAvatar">
-                                <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("mini_avatar") %>' />
-                            </div>
-                            <div class="FriendName">
-                                <%# Eval("first_name")%><br />
-                                <%# Eval("last_name") %>
-                            </div>
-                        </ItemTemplate>
-                    </asp:DataList>
-                </div>
+                <asp:UpdatePanel runat="server" ID="FriendListUPanel" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:DataList ID="FriendsToTalkList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
+                            <ItemTemplate>
+                                <div data-id='<%#Eval("id") %>' style="display: none;"></div>
+                                <div class="FriendAvatar">
+                                    <asp:Image ID="Image2" runat="server" ImageUrl='<%# Eval("mini_avatar") %>' />
+                                </div>
+                                <div class="FriendName">
+                                    <%# Eval("first_name")%><br />
+                                    <%# Eval("last_name") %>
+                                </div>
+                            </ItemTemplate>
+                        </asp:DataList>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
             <div id="MessagesBlock">
                 <div id="MessagesList">
@@ -31,17 +88,24 @@
                         <asp:TextBox runat="server" ClientIDMode="Static" ID="TalkToTxt" />
                         </div>
                     </div>
+
                     <div id="MessagesText">
-                        <div id="WrapperMessagesListView">
-                            <asp:ListView runat="server" ID="MessagesListView" ClientIDMode="Static">
-                                <ItemTemplate>
-                                    <div class="Message">
-                                        <div class="MessageSender"><%#Eval("first_name") %></div>
-                                        <div class="MessageText"><%# Eval("message") %></div>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:ListView>
-                        </div>
+                        <asp:UpdatePanel runat="server" ID="MessagesUPanel" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <asp:UpdateProgress DisplayAfter="100" ClientIDMode="Static" ID="UpdateProgress1" runat="server" Visible="true" AssociatedUpdatePanelID="MessagesUPanel">
+                                    <ProgressTemplate>
+                                        <img src="img/loadingAnimation.gif" /></ProgressTemplate>
+                                </asp:UpdateProgress>
+                                <asp:ListView runat="server" ID="MessagesListView" ClientIDMode="Static">
+                                    <ItemTemplate>
+                                        <div class="Message">
+                                            <div class="MessageSender"><%#Eval("first_name") %></div>
+                                            <div class="MessageText"><%# Eval("message") %></div>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                     </div>
                 </div>
                 <div id="MessageTyping">

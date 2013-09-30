@@ -22,40 +22,7 @@
     <script src="script/uploader/jquery.fileupload-image.js"></script>
     <script>
         $(function () {
-            var talkingFriendId = 0;
-            function ReplaceSpacesToOne(str) {
-                var reg = /(\s){2,}/;
-                return str.replace(reg, " ");
-            }
-            $("#TalkToTxt").keyup(function () {
-                //Allow only All symbols + backspace
-                $("#FriendsToTalkBlock").load("Messages.aspx #WrapperFriendsList", { partName: ReplaceSpacesToOne($(this).val().trim()) });
-            });
-
-            $("#FriendsToTalkBlock").delegate(".FriendAvatar", "click", function () {
-                $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
-                talkingFriendId = $(this).siblings().attr("data-id");
-                $("#FriendsToTalkBlock").load("Messages.aspx #WrapperFriendsList");
-                $("#MessagesText").load("Messages.aspx #WrapperMessagesListView", { receiverId: talkingFriendId });
-            });
-
-            $("#sendMessage").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "AjaxMessagesHandler.ashx",
-                    data: { receiverId:talkingFriendId, messageText: $("#messageTxt").val() },
-                    success: function () {
-                        if (talkingFriendId > 0) {
-                            $("<div class='Message'><div class='MessageSender'><%=person.Fields["first_name"]%></div><div class='MessageText'>" + $("#messageTxt").val() + "</div></div>").appendTo("#WrapperMessagesListView");
-                            $("#messageTxt").val("");
-                        }
-                    },
-                    error: function () {
-                        alert("Error in ajax to AjaxMessagesHandler");
-                    }
-                });
-            });
-
+            
             $("#dialog").dialog({
                 autoOpen: false,
                 modal: true,
