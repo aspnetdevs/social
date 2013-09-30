@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,32 +14,38 @@ public static class Helper
 
     public static DataTable FindMessages(string senderId, string receiverId)
     {
-        return SqlQuery(@"SELECT r.first_name as receiver_first_name, 
-	                      r.last_name as receiver_last_name,
-	                      r.status as receiver_status,
-	                      s.first_name as sender_first_name, 
-	                      s.last_name as  sender_last_name, 
-	                      s.status as sender_status,
-	                      s.message_id,
-	                      s.message,
-	                      s.dispatch_date
-                   FROM persons r 
-                        INNER JOIN (SELECT * FROM persons p 
-					                              INNER JOIN(SELECT * FROM messages 
-								                             WHERE ("+senderId+@" = 2 OR "+senderId+@" = 1) AND 
-									                               ("+receiverId+@" = 1 OR "+receiverId+@" = 2)) m 
-					                              ON p.id = m.sender_id) s 
-                        ON r.id = s.receiver_id");
+        return SqlQuery(@"SELECT id,first_name,last_name, status,message_id,message,dispatch_date 
+                          FROM persons p INNER JOIN( SELECT * FROM messages 
+								                              WHERE ((sender_id = "+senderId+@" AND sender_delete = 0) AND 
+                                                                    (receiver_id = "+receiverId+@") OR (sender_id = "+receiverId+@") AND 
+                                                                    (receiver_id = "+senderId+@" AND receiver_delete = 0)
+)) m 
+					                              ON p.id = m.sender_id");
     }
 
     public static DataTable SqlQuery(string query)
     {
         SqlConnection conn = new SqlConnection(connString);
+        SqlCommand cmd = new SqlCommand();
         DataTable dt = new DataTable();
         SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
         conn.Open();
         adapter.Fill(dt);
         conn.Close();
         return dt;
+    }
+
+    public static int SqlUpdateData(string query, IDictionary<string,object> parameters)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        SqlCommand cmd = new SqlCommand(query,conn);
+        foreach (var parameter in parameters)
+        {
+            cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+        }
+        conn.Open();
+        int rowsAffected = cmd.ExecuteNonQuery();
+        conn.Close();
+        return rowsAffected;
     }
 }

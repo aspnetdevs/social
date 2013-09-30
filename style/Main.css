@@ -151,12 +151,12 @@
     font-size: smaller;
 }
 
-#FriendsList {
+#FriendsList,#FriendsToTalkList {
     text-align: center;
     width: 100%;
 }
 
-    #FriendsList td {
+    #FriendsList td, #FriendsToTalkList td {
         width: 25%;
     }
 
@@ -226,13 +226,13 @@
 
 .Message {
     bottom: 0;
-    height: 50px;
+    min-height:35px;
     clear: both;
     padding: 0 20px;
 }
 
     .Message .MessageSender {
-        color: black;
+        color: green;
         padding: 3px 2% 0 0;
         text-align: right;
         float: left;
@@ -247,4 +247,7 @@
         float: right;
         width: 73%;
         height: 100%;
+    }
+    .Message .MyMessage {
+       color:blue; 
     }

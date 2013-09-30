@@ -20,8 +20,8 @@ public partial class Messages : System.Web.UI.Page
             else
             {
                 person = new Person(Request.Cookies["user"].Value).FindFriends(Request.Params["partName"] == null ? "" : Request.Params["partName"]);
-                FriendsList.DataSource = person.Friends;
-                FriendsList.DataBind();
+                FriendsToTalkList.DataSource = person.Friends;
+                FriendsToTalkList.DataBind();
 
             }
             Items["isMyPage"] = true;

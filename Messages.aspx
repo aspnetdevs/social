@@ -9,7 +9,7 @@
         <div style="height: 93%;">
             <div id="FriendsToTalkBlock">
                 <div id="WrapperFriendsList">
-                    <asp:DataList ID="FriendsList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
+                    <asp:DataList ID="FriendsToTalkList" ClientIDMode="Static" RepeatDirection="Vertical" RepeatColumns="1" runat="server">
                         <ItemTemplate>
                             <div data-id='<%#Eval("id") %>' style="display: none;"></div>
                             <div class="FriendAvatar">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="FriendName">
                                 <%# Eval("first_name")%><br />
-                                <%#Eval("last_name") %>
+                                <%# Eval("last_name") %>
                             </div>
                         </ItemTemplate>
                     </asp:DataList>
@@ -36,7 +36,7 @@
                             <asp:ListView runat="server" ID="MessagesListView" ClientIDMode="Static">
                                 <ItemTemplate>
                                     <div class="Message">
-                                        <div class="MessageSender"><%#Eval("sender_first_name") %></div>
+                                        <div class="MessageSender"><%#Eval("first_name") %></div>
                                         <div class="MessageText"><%# Eval("message") %></div>
                                     </div>
                                 </ItemTemplate>

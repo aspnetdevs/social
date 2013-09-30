@@ -6,6 +6,7 @@ using System.IO;
 using System.Web.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 public class AjaxFileHandler : IHttpHandler
 {
@@ -23,13 +24,9 @@ public class AjaxFileHandler : IHttpHandler
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             var result = new { name = file.FileName };
             context.Response.Write(serializer.Serialize(result));
-            string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
-            SqlConnection conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("UPDATE persons SET avatar = @avatar WHERE id = "+context.Request.Cookies["user"].Value,conn);
-            cmd.Parameters.AddWithValue("@avatar", catalog + file.FileName);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            IDictionary<string,object> parameters = new Dictionary<string,object>();
+            parameters.Add("@avatar",catalog + file.FileName);
+            Helper.SqlUpdateData("UPDATE persons SET avatar = @avatar WHERE id = " + context.Request.Cookies["user"].Value, parameters);
         }
     }
     
