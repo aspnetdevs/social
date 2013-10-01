@@ -59,7 +59,7 @@
                }, 500);
         });
     </script>
-    <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
+
     <div class="block right-block top-block" id="Messages">
         <div style="height: 7%;">
             <span class="block-title">Сообщения</span>

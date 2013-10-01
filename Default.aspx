@@ -2,32 +2,6 @@
 
 <%@ MasterType VirtualPath="~/Main.master" %>
 <asp:Content ID="MainContent" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
-    <script>
-        $(document).ready(function () {
-            var Friends = $("#Friends");
-            var FriendsList = $("#FriendsList");
-            var top_block = $(".top-block");
-            var heightF = Friends.css("height");
-            var widthF = Friends.css("width");
-            var marrginTopF = parseInt(top_block.css("margin-top"));
-            var marginTop = parseInt(-Friends.position().top + parseInt(marrginTopF));
-            $("#sizeFriends").click(function () {
-                
-                
-                if ($(this).attr("class") == "Zoom") {
-                    $(this).removeClass("Zoom");
-                    Friends.animate({ "margin-top": "-=" + (marginTop - marrginTopF) + "px", "width": widthF, "height": heightF }, 300);
-                    $(this).attr("src", "img/imgSocial/sizeFriends.png").removeClass("Zoom");
-                }
-                else {
-                    Friends.animate({ "margin-top": marginTop+"px", "width": "100%", "height": "550px" }, 300);
-                    $(this).attr("src", "img/imgSocial/ReSizeFriends.png").addClass("Zoom");
-                }
-                //Friends.load("Default.aspx #FriendsList", { RepeatColum: "1" });
-                //  Friends.css({ "position": "absolute" });
-            })
-        })
-    </script>
 
     <div class="block right-block top-block" id="Info">
         <span class="block-title"><%=person.Fields["first_name"] %> <%=person.Fields["last_name"] %></span><span id="Status"><%=person.Fields["status"] %></span>

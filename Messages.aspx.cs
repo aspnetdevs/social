@@ -13,13 +13,14 @@ public partial class Messages : System.Web.UI.Page
     {
         if (Request.Cookies["user"] != null)
         {
+            ScriptManager scriptManager = ScriptManager.GetCurrent(this);
             person = new Person(Request.Cookies["user"].Value);
-            if (!ScriptManager.IsInAsyncPostBack || ScriptManager.AsyncPostBackSourceElementID == FriendListUPanel.UniqueID)
+            if (!scriptManager.IsInAsyncPostBack || scriptManager.AsyncPostBackSourceElementID == FriendListUPanel.UniqueID)
             {
                 FriendsToTalkList.DataSource = person.FindFriends(TalkToTxt.Text == string.Empty ? "" : TalkToTxt.Text).Friends;
                 FriendsToTalkList.DataBind();
             }
-            else if (!ScriptManager.IsInAsyncPostBack || ScriptManager.AsyncPostBackSourceElementID == MessagesUPanel.UniqueID)
+            else if (!scriptManager.IsInAsyncPostBack || scriptManager.AsyncPostBackSourceElementID == MessagesUPanel.UniqueID)
             {
                 System.Threading.Thread.Sleep(1000);
                 MessagesListView.DataSource = Helper.FindMessages(Request.Cookies["user"].Value, talkingFriendId.Value);

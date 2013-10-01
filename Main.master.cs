@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
 
 
 public partial class Main : System.Web.UI.MasterPage
@@ -11,15 +12,22 @@ public partial class Main : System.Web.UI.MasterPage
     public Person person;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.Params["RepeatColum"] != null & Request.Params["RepeatColum"]=="1")
-        this.FriendsList.RepeatColumns = 1;
-
-        string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : Request.Cookies["user"].Value;
-        //Make it possible to pass this person to another pages
-        person = new Person(id).FindFriends("");
-        FriendsList.DataSource = person.Friends;
-        FriendsList.DataBind();
-        Image1.ImageUrl = person.Fields["avatar"].ToString();
+        if (Request.Cookies["user"] != null)
+        {
+            string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : Request.Cookies["user"].Value;
+            person = new Person(id).FindFriends("");
+            if (MainScriptManager.IsInAsyncPostBack && MainScriptManager.AsyncPostBackSourceElementID == MainFriendsUPanel.UniqueID)
+            {
+                JavaScriptSerializer json = new JavaScriptSerializer();
+                var obj = json.Deserialize<IDictionary<string, int>>(Request["__EVENTARGUMENT"]);
+                FriendsList.RepeatColumns = obj["repeatColumn"];
+ 
+            }
+            FriendsList.DataSource = person.Friends;
+            FriendsList.DataBind();
+            Image1.ImageUrl = person.Fields["avatar"].ToString();
+            
+        }
     }
     protected void mainNavItem_Click(object sender, EventArgs e)
     {
