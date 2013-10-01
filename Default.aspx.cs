@@ -8,9 +8,11 @@ using System.Web.UI.WebControls;
 
 public partial class _Default : System.Web.UI.Page
 {
+
     public Person person = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         HttpCookie cookie = Request.Cookies["user"];
         if (cookie == null)
             Response.Redirect("~/Login.aspx");

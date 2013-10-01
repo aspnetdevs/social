@@ -151,6 +151,9 @@
                                 </div>
                             </ItemTemplate>
                         </asp:DataList>
+                        <div id="wrapperSizeFriends">
+                            <img id="sizeFriends" src="img/imgSocial/sizeFriends.png" />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,9 @@ public partial class Main : System.Web.UI.MasterPage
     public Person person;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request.Params["RepeatColum"] != null & Request.Params["RepeatColum"]=="1")
+        this.FriendsList.RepeatColumns = 1;
+
         string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : Request.Cookies["user"].Value;
         //Make it possible to pass this person to another pages
         person = new Person(id).FindFriends("");
@@ -38,5 +41,6 @@ public partial class Main : System.Web.UI.MasterPage
     {
         Response.Redirect("~/Messages.aspx");
     }
+    
 }
 
