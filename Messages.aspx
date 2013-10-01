@@ -2,13 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
     <input runat="server" type="hidden" clientidmode="Static" id="talkingFriendId" />
-    <style>
-        #UpdateProgress1 {
-            clear: both;
-            color: red;
-            text-align:center;
-        }
-    </style>
     <script>
         $(function () {
             var talkingFriendId = 0;
@@ -23,18 +16,17 @@
             });
 
             $("#FriendsToTalkBlock").delegate(".FriendAvatar", "click", function () {
-                //Some little manipulation. Need to pass data with _dopostback function
-                $("#TalkToTxt").val("");
+                //It doesn't work
+                //<=ClientScript.GetPostBackEventReference(FriendListUPanel,"empty")%>
 
-                //Why doesn't it work???
-                <%=ClientScript.GetPostBackEventReference(FriendListUPanel,"")%>
-                $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
                 talkingFriendId = $(this).siblings().attr("data-id");
-
-                //Some little manipulation. Need to pass data with _dopostback function
-                $("#talkingFriendId").val(talkingFriendId);
-
-                <%=ClientScript.GetPostBackEventReference(MessagesUPanel,"")%>
+                if ($("#talkingFriendId").val() != talkingFriendId) {
+                    $("#TalkToTxt").val(ReplaceSpacesToOne($(this).siblings().text().trim()));
+                    //Some little manipulation. Need to pass data with _dopostback function
+                    $("#talkingFriendId").val(talkingFriendId);
+                    <%=ClientScript.GetPostBackEventReference(MessagesUPanel,"")%>
+                    $("#<%=MessagesUPanel.ClientID%>").text("");
+                }
             });
 
             $("#sendMessage").click(function () {
@@ -44,7 +36,6 @@
                     data: { receiverId: talkingFriendId, messageText: $("#messageTxt").val() },
                     success: function () {
                         if (talkingFriendId > 0) {
-                            $("<div class='Message'><div class='MessageSender'><%=person.Fields["first_name"]%></div><div class='MessageText'>" + $("#messageTxt").val() + "</div></div>").appendTo("#<%=MessagesUPanel.ClientID%>");
                             $("#messageTxt").val("");
                         }
                     },
@@ -53,6 +44,19 @@
                     }
                 });
             });
+            setInterval(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "AjaxMessagesHandler.ashx",
+                    data: { lastMessageId: $("#<%=MessagesUPanel.ClientID%> div.Message").last().attr("data-messageid"), talkingFriendId: talkingFriendId },
+                    success: function (result) {
+                        $(result).appendTo($("#<%=MessagesUPanel.ClientID%>"));
+                    },
+                    error: function () {
+                        alert("Error in get Last Messages")
+                    }
+                });
+               }, 500);
         });
     </script>
     <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
@@ -88,17 +92,17 @@
                         <asp:TextBox runat="server" ClientIDMode="Static" ID="TalkToTxt" />
                         </div>
                     </div>
-
+                    <asp:UpdateProgress DisplayAfter="100" ClientIDMode="Static" ID="MessagesProgress" runat="server" Visible="true" AssociatedUpdatePanelID="MessagesUPanel">
+                        <ProgressTemplate>
+                            <img src="img/loadingAnimation.gif" />
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
                     <div id="MessagesText">
                         <asp:UpdatePanel runat="server" ID="MessagesUPanel" UpdateMode="Conditional">
                             <ContentTemplate>
-                                <asp:UpdateProgress DisplayAfter="100" ClientIDMode="Static" ID="UpdateProgress1" runat="server" Visible="true" AssociatedUpdatePanelID="MessagesUPanel">
-                                    <ProgressTemplate>
-                                        <img src="img/loadingAnimation.gif" /></ProgressTemplate>
-                                </asp:UpdateProgress>
                                 <asp:ListView runat="server" ID="MessagesListView" ClientIDMode="Static">
                                     <ItemTemplate>
-                                        <div class="Message">
+                                        <div class="Message" data-messageid="<%# Eval("message_id") %>">
                                             <div class="MessageSender"><%#Eval("first_name") %></div>
                                             <div class="MessageText"><%# Eval("message") %></div>
                                         </div>

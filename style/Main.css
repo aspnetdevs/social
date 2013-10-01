@@ -151,7 +151,7 @@
     font-size: smaller;
 }
 
-#FriendsList,#FriendsToTalkList {
+#FriendsList, #FriendsToTalkList {
     text-align: center;
     width: 100%;
 }
@@ -226,7 +226,7 @@
 
 .Message {
     bottom: 0;
-    min-height:35px;
+    min-height: 35px;
     clear: both;
     padding: 0 20px;
 }
@@ -248,6 +248,12 @@
         width: 73%;
         height: 100%;
     }
+
     .Message .MyMessage {
-       color:blue; 
+        color: blue;
     }
+
+#MessagesProgress {
+    clear: both;
+    text-align: center;
+}

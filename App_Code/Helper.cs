@@ -12,7 +12,7 @@ public static class Helper
 {
     public static string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
 
-    public static DataTable FindMessages(string senderId, string receiverId)
+    public static DataTable FindMessages(string senderId, string receiverId, string lastMessageId="0")
     {
         return SqlQuery(@"SELECT id,first_name,last_name, status,message_id,message,dispatch_date 
                           FROM persons p INNER JOIN( SELECT * FROM messages 
@@ -20,7 +20,8 @@ public static class Helper
                                                                     (receiver_id = "+receiverId+@") OR (sender_id = "+receiverId+@") AND 
                                                                     (receiver_id = "+senderId+@" AND receiver_delete = 0)
 )) m 
-					                              ON p.id = m.sender_id");
+					                              ON p.id = m.sender_id
+WHERE message_id > "+lastMessageId);
     }
 
     public static DataTable SqlQuery(string query)

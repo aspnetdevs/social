@@ -21,8 +21,8 @@ public partial class Messages : System.Web.UI.Page
             }
             else if (!ScriptManager.IsInAsyncPostBack || ScriptManager.AsyncPostBackSourceElementID == MessagesUPanel.UniqueID)
             {
-                System.Threading.Thread.Sleep(2000);
-                MessagesListView.DataSource = Helper.FindMessages(Request.Cookies["user"].Value,talkingFriendId.Value);
+                System.Threading.Thread.Sleep(1000);
+                MessagesListView.DataSource = Helper.FindMessages(Request.Cookies["user"].Value, talkingFriendId.Value);
                 MessagesListView.DataBind();
             }
             else
