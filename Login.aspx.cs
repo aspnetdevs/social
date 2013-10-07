@@ -37,7 +37,7 @@ public partial class Login : System.Web.UI.Page
                 HttpCookie cookie = new HttpCookie("user", id.ToString());
                 cookie.Expires = DateTime.Now.AddDays(7);
                 Response.Cookies.Add(cookie);
-                Response.Redirect("http://localhost/social/Default.aspx?id="+id);
+                Response.Redirect("~/Default.aspx?id="+id);
             }
          
         }

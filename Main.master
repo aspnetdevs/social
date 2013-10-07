@@ -8,6 +8,7 @@
     <link href="style/jquery-ui.min.css" rel="stylesheet" />
     <link href="style/bootstrap.min.css" rel="stylesheet" />
     <link href="style/jquery.fileupload-ui.css" rel="stylesheet" />
+    <link href="style/jquery.jscrollpane.css" rel="stylesheet" />
     <link href="style/Main.css" rel="stylesheet" />
     <script src="script/jquery-2.0.0.min.js"></script>
     <script src="script/jquery-migrate-1.2.1.min.js"></script>
@@ -20,6 +21,8 @@
     <script src="script/uploader/jquery.fileupload.js"></script>
     <script src="script/uploader/jquery.fileupload-process.js"></script>
     <script src="script/uploader/jquery.fileupload-image.js"></script>
+    <script src="script/jquery.mousewheel.js"></script>
+    <script src="script/jquery.jscrollpane.min.js"></script>
     <script>
         
     </script>
@@ -103,6 +106,20 @@
                 }
             });
            
+            //setInterval(function () {
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "AjaxUpdatesHandler.ashx",
+            //        success: function (result) {
+                        
+            //        },
+            //        error: function () {
+            //            alert("Error in get Updates")
+            //        }
+            //    });
+            //}, 1000);
+
+
 
             $("#dialog").dialog({
                 autoOpen: false,
