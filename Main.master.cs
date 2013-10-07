@@ -5,13 +5,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
+using System.Web.Services;
 
 
 public partial class Main : System.Web.UI.MasterPage
 {
     public Person person;
+    protected IDictionary<string, object> obj = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         if (Request.Cookies["user"] != null)
         {
             string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : Request.Cookies["user"].Value;
@@ -19,9 +22,14 @@ public partial class Main : System.Web.UI.MasterPage
             if (MainScriptManager.IsInAsyncPostBack && MainScriptManager.AsyncPostBackSourceElementID == MainFriendsUPanel.UniqueID)
             {
                 JavaScriptSerializer json = new JavaScriptSerializer();
-                var obj = json.Deserialize<IDictionary<string, int>>(Request["__EVENTARGUMENT"]);
-                FriendsList.RepeatColumns = obj["repeatColumn"];
- 
+                obj = json.Deserialize<IDictionary<string, object>>(Request["__EVENTARGUMENT"]);
+                if (obj.ContainsKey("repeatColumn"))
+                FriendsList.RepeatColumns = (int)obj["repeatColumn"];
+                if (obj.ContainsKey("Online"))
+                {
+                    person = new Person(id).FindFriendsOnline("");
+                }
+
             }
             FriendsList.DataSource = person.Friends;
             FriendsList.DataBind();
@@ -49,6 +57,5 @@ public partial class Main : System.Web.UI.MasterPage
     {
         Response.Redirect("~/Messages.aspx");
     }
-    
 }
 

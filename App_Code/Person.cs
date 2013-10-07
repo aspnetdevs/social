@@ -24,4 +24,9 @@ public class Person
         Friends = Helper.SqlQuery(@"SELECT * FROM persons WHERE id IN (SELECT friend_id FROM persons_to_friends WHERE person_id = " + Fields["id"] + ") AND (first_name+' '+last_name LIKE '%" + partName + "%')");
         return this;
     }
+    public Person FindFriendsOnline(string partName)
+    {
+        Friends = Helper.SqlQuery(@"SELECT * FROM persons WHERE id IN (SELECT friend_id FROM persons_to_friends WHERE person_id = " + Fields["id"] + ") AND (status='Online')");
+        return this;
+    }
 }

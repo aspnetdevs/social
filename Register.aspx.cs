@@ -232,7 +232,7 @@ public partial class Register : System.Web.UI.Page
             {
                 Top = "TOP 3";
             }
-            SqlDataAdapter ad = new SqlDataAdapter("SELECT " + Top + " * FROM cities WHERE country_id="+id+" AND city_name LIKE '" + prefix + "%'", conn);
+            SqlDataAdapter ad = new SqlDataAdapter("SELECT " + Top + " * FROM cities WHERE country_id=" + id + " AND city_name LIKE '" + prefix + "%'", conn);
             conn.Open();
             ad.Fill(dt);
             conn.Close();

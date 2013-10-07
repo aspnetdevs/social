@@ -1,14 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
 public partial class _Default : System.Web.UI.Page
 {
+    [WebMethod]
+    public static string DelUser(string DelId, string ourId)
+    {
+        string connString = WebConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+        SqlConnection conn = new SqlConnection(connString);
+        SqlCommand cmd = new SqlCommand("DELETE FROM persons_to_friends WHERE person_id=@person_id AND friend_id=@friend_id ", conn);
+        cmd.Parameters.Add(new SqlParameter("@person_id", ourId));
+        cmd.Parameters.Add(new SqlParameter("@friend_id", DelId));
+        conn.Open();
+        cmd.ExecuteNonQuery();
+        conn.Close();
 
+        return DelId;
+    }
     public Person person = null;
     protected void Page_Load(object sender, EventArgs e)
     {
